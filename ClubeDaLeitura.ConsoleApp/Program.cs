@@ -1,10 +1,33 @@
-﻿namespace ClubeDaLeitura.ConsoleApp
+﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloAmigo;
+
+namespace ClubeDaLeitura.ConsoleApp;
+
+class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
+
+        TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo);
+
+        TelaPrincipal telaPrincipal = new TelaPrincipal();
+
+        while (true)
         {
-            Console.WriteLine("Hello, World!");
+            char opcaoPrincipal = telaPrincipal.ApresentarMenuPrincipal();
+
+            if (opcaoPrincipal == '1')
+            {
+                char opcaoEscolhida = telaAmigo.ApresentarMenu();
+
+                switch (opcaoEscolhida)
+                {
+                    case '1': telaAmigo.InserirAmigo(); break;
+
+                    default: break;
+                }
+            }
         }
     }
 }
