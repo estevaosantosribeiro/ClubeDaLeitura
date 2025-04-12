@@ -25,6 +25,8 @@ class Program
                 {
                     case '1': telaAmigo.Inserir(); break;
 
+                    case '4': telaAmigo.VisualizarTodos(true); break;
+
                     default: break;
                 }
             }

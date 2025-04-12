@@ -14,4 +14,9 @@ public class RepositorioAmigo
         amigos[contadorAmigos++] = novoAmigo;
     }
 
+
+    public Amigo[] SelecionarTodos()
+    {
+        return amigos;
+    }
 }

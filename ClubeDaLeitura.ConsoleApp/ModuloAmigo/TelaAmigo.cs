@@ -26,6 +26,7 @@ public class TelaAmigo
         Console.WriteLine();
 
         Console.WriteLine("1 - Inserção de Amigo");
+        Console.WriteLine("4 - Visualizar Amigos");
 
         Console.WriteLine("S - Voltar");
 
@@ -53,6 +54,40 @@ public class TelaAmigo
         repositorioAmigo.Inserir(novoAmigo);
 
         Console.WriteLine("O registro foi concluído com sucesso!");
+    }
+
+
+    public void VisualizarTodos(bool exibirTitulo)
+    {
+        if (exibirTitulo) ExibirCabecalho();
+
+        Console.WriteLine("Visualizando Amigos...");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "{0, -6} | {1, -20} | {2, -20} | {3, -15} | {4, -20}",
+            "Id", "Nome", "Responsável", "Telefone", "Empréstimos"
+        );
+
+        Amigo[] amigosCadastrados = repositorioAmigo.SelecionarTodos();
+
+        for (int i = 0; i < amigosCadastrados.Length; i++)
+        {
+            Amigo a = amigosCadastrados[i];
+
+            if (a == null) continue;
+
+            Console.WriteLine(
+            "{0, -6} | {1, -20} | {2, -20} | {3, -15} | {4, -20}",
+            a.Id, a.Nome, a.NomeResponsavel, a.Telefone, 0
+            );
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Pressione ENTER para continuar...");
+        Console.ReadLine();
     }
 
     public Amigo ObterDados()
