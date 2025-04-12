@@ -26,6 +26,7 @@ public class TelaAmigo
         Console.WriteLine();
 
         Console.WriteLine("1 - Inserção de Amigo");
+        Console.WriteLine("2 - Edição de Amigo");
         Console.WriteLine("4 - Visualizar Amigos");
 
         Console.WriteLine("S - Voltar");
@@ -44,7 +45,7 @@ public class TelaAmigo
 
         Console.WriteLine();
 
-        Console.WriteLine("Cadastrando Amigo...");
+        Console.WriteLine("Inserindo Amigo...");
         Console.WriteLine("--------------------------------------------");
 
         Console.WriteLine();
@@ -56,6 +57,35 @@ public class TelaAmigo
         Console.WriteLine("O registro foi concluído com sucesso!");
     }
 
+    public void Editar()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine("Editando Amigo...");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        VisualizarTodos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idAmigo = Convert.ToInt32(Console.ReadLine()!);
+
+        Console.WriteLine();
+
+        Amigo amigoEditado = ObterDados();
+
+        bool conseguiuEditar = repositorioAmigo.Editar(idAmigo, amigoEditado);
+
+        if (!conseguiuEditar)
+        {
+            Console.WriteLine("Houve um erro durante a edição do registro...");
+
+            return;
+        }
+
+        Console.WriteLine("O registro foi editado com sucesso!");
+    }
 
     public void VisualizarTodos(bool exibirTitulo)
     {
@@ -86,8 +116,12 @@ public class TelaAmigo
         }
 
         Console.WriteLine();
-        Console.WriteLine("Pressione ENTER para continuar...");
-        Console.ReadLine();
+
+        if (exibirTitulo)
+        {
+            Console.WriteLine("Pressione ENTER para continuar...");
+            Console.ReadLine();
+        }
     }
 
     public Amigo ObterDados()
