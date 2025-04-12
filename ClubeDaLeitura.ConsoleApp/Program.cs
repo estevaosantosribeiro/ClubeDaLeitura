@@ -23,7 +23,7 @@ class Program
 
                 switch (opcaoEscolhida)
                 {
-                    case '1': telaAmigo.InserirAmigo(); break;
+                    case '1': telaAmigo.Inserir(); break;
 
                     default: break;
                 }

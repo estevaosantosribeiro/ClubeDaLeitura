@@ -37,7 +37,7 @@ public class TelaAmigo
         return opcaoEscolhida;
     }
 
-    public void InserirAmigo()
+    public void Inserir()
     {
         ExibirCabecalho();
 
@@ -48,14 +48,14 @@ public class TelaAmigo
 
         Console.WriteLine();
 
-        Amigo novoAmigo = ObterDadosAmigo();
+        Amigo novoAmigo = ObterDados();
 
-        repositorioAmigo.InserirAmigo(novoAmigo);
+        repositorioAmigo.Inserir(novoAmigo);
 
         Console.WriteLine("O registro foi concluído com sucesso!");
     }
 
-    public Amigo ObterDadosAmigo()
+    public Amigo ObterDados()
     {
         Console.Write("Digite o nome do amigo: ");
         string nome = Console.ReadLine()!;
