@@ -27,6 +27,7 @@ public class TelaCaixa
 
         Console.WriteLine("1 - Cadastrar Caixa");
         Console.WriteLine("2 - Editar Caixa");
+        Console.WriteLine("3 - Excluir Caixa");
         Console.WriteLine("4 - Visualizar Caixas");
 
         Console.WriteLine("S - Voltar");
@@ -85,6 +86,34 @@ public class TelaCaixa
         }
 
         Notificador.ExibirMensagem("O registro foi editado com sucesso!", ConsoleColor.Green);
+    }
+
+    public void Excluir()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine("Excluindo Caixa...");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        VisualizarTodos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idCaixa = Convert.ToInt32(Console.ReadLine()!);
+
+        Console.WriteLine();
+
+        bool conseguiuExcluir = repositorioCaixa.Excluir(idCaixa);
+
+        if (!conseguiuExcluir)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a exclusão do registro", ConsoleColor.Red);
+
+            return;
+        }
+
+        Notificador.ExibirMensagem("O registro foi excluído com sucesso!", ConsoleColor.Green);
     }
 
     public void VisualizarTodos(bool exibirTitulo)

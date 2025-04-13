@@ -18,15 +18,14 @@ public class RepositorioAmigo
     {
         for (int i = 0; i < amigos.Length; i++)
         {
-            Amigo a = amigos[i];
 
-            if (a == null) continue;
+            if (amigos[i] == null) continue;
 
-            if (a.Id == idAmigo)
+            if (amigos[i].Id == idAmigo)
             {
-                a.Nome = amigoEditado.Nome;
-                a.NomeResponsavel = amigoEditado.NomeResponsavel;
-                a.Telefone = amigoEditado.Telefone;
+                amigos[i].Nome = amigoEditado.Nome;
+                amigos[i].NomeResponsavel = amigoEditado.NomeResponsavel;
+                amigos[i].Telefone = amigoEditado.Telefone;
 
                 return true;
             }

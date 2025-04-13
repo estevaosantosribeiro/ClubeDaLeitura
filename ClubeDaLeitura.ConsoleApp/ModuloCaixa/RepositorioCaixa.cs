@@ -19,15 +19,30 @@ public class RepositorioCaixa
     {
         for (int i = 0; i < caixas.Length; i++)
         {
-            Caixa c = caixas[i];
+            if (caixas[i] == null) continue;
 
-            if (c == null) continue;
-
-            if (c.Id == idCaixa)
+            if (caixas[i].Id == idCaixa)
             {
-                c.Etiqueta = novaCaixa.Etiqueta;
-                c.Cor = novaCaixa.Cor;
-                c.DiasEmprestimo = novaCaixa.DiasEmprestimo;
+                caixas[i].Etiqueta = novaCaixa.Etiqueta;
+                caixas[i].Cor = novaCaixa.Cor;
+                caixas[i].DiasEmprestimo = novaCaixa.DiasEmprestimo;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool Excluir(int idCaixa)
+    {
+        for (int i = 0; i < caixas.Length; i++)
+        {
+            if (caixas[i] == null) continue;
+
+            if (caixas[i].Id == idCaixa)
+            {
+                caixas[i] = null!;
 
                 return true;
             }

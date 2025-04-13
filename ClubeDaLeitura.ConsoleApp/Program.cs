@@ -47,6 +47,8 @@ class Program
 
                     case '2': telaCaixa.Editar(); break;
 
+                    case '3': telaCaixa.Excluir(); break;
+
                     case '4': telaCaixa.VisualizarTodos(true); break;
 
                     default: break;
