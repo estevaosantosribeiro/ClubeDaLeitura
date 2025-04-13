@@ -1,5 +1,6 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
 using ClubeDaLeitura.ConsoleApp.ModuloAmigo;
+using ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 
 namespace ClubeDaLeitura.ConsoleApp;
 
@@ -8,8 +9,10 @@ class Program
     static void Main(string[] args)
     {
         RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
+        RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
 
         TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo);
+        TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa);
 
         TelaPrincipal telaPrincipal = new TelaPrincipal();
 
@@ -30,6 +33,17 @@ class Program
                     case '3': telaAmigo.Excluir(); break;
 
                     case '4': telaAmigo.VisualizarTodos(true); break;
+
+                    default: break;
+                }
+            }
+            else if (opcaoPrincipal == '2')
+            {
+                char opcaoEscolhida = telaCaixa.ApresentarMenu();
+
+                switch (opcaoEscolhida)
+                {
+                    case '1': telaCaixa.Cadastrar(); break;
 
                     default: break;
                 }
