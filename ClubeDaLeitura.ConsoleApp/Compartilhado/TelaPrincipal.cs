@@ -14,6 +14,7 @@ public class TelaPrincipal
 
         Console.WriteLine("1 - Controle de Amigos");
         Console.WriteLine("2 - Controle de Caixas");
+        Console.WriteLine("3 - Controle de Revistas");
 
         Console.WriteLine();
 
