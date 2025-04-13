@@ -15,6 +15,27 @@ public class RepositorioCaixa
         caixas[contadorCaixas++] = novaCaixa;
     }
 
+    public bool Editar(int idCaixa, Caixa novaCaixa)
+    {
+        for (int i = 0; i < caixas.Length; i++)
+        {
+            Caixa c = caixas[i];
+
+            if (c == null) continue;
+
+            if (c.Id == idCaixa)
+            {
+                c.Etiqueta = novaCaixa.Etiqueta;
+                c.Cor = novaCaixa.Cor;
+                c.DiasEmprestimo = novaCaixa.DiasEmprestimo;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public Caixa[] SelecionarTodos()
     {
         return caixas;

@@ -26,6 +26,7 @@ public class TelaCaixa
         Console.WriteLine();
 
         Console.WriteLine("1 - Cadastrar Caixa");
+        Console.WriteLine("2 - Editar Caixa");
         Console.WriteLine("4 - Visualizar Caixas");
 
         Console.WriteLine("S - Voltar");
@@ -54,6 +55,36 @@ public class TelaCaixa
         repositorioCaixa.Cadastrar(novaCaixa);
 
         Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
+    }
+
+    public void Editar()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine("Editando Caixa...");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        VisualizarTodos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idCaixa = Convert.ToInt32(Console.ReadLine()!);
+
+        Console.WriteLine();
+
+        Caixa caixaEditada = ObterDados();
+
+        bool conseguiuEditar = repositorioCaixa.Editar(idCaixa, caixaEditada);
+
+        if (!conseguiuEditar)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a edição do registro", ConsoleColor.Red);
+
+            return;
+        }
+
+        Notificador.ExibirMensagem("O registro foi editado com sucesso!", ConsoleColor.Green);
     }
 
     public void VisualizarTodos(bool exibirTitulo)

@@ -45,6 +45,8 @@ class Program
                 {
                     case '1': telaCaixa.Cadastrar(); break;
 
+                    case '2': telaCaixa.Editar(); break;
+
                     case '4': telaCaixa.VisualizarTodos(true); break;
 
                     default: break;
