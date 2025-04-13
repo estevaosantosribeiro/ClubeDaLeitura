@@ -13,4 +13,9 @@ public class RepositorioRevista
 
         revistas[contadorRevistas++] = novaRevista;
     }
+
+    public Revista[] SelecionarTodos()
+    {
+        return revistas;
+    }
 }

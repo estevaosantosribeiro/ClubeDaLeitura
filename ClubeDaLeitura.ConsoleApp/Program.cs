@@ -65,6 +65,8 @@ class Program
                 {
                     case '1': telaRevista.Inserir(); break;
 
+                    case '4': telaRevista.VisualizarTodos(true); break;
+
                     default: break;
                 }
             }

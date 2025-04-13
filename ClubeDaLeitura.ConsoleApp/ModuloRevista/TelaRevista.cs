@@ -26,7 +26,8 @@ public class TelaRevista
 
         Console.WriteLine();
 
-        Console.WriteLine("1 - Cadastro de Revista");
+        Console.WriteLine("1 - Inserir Revista");
+        Console.WriteLine("4 - Visualizar Revista");
 
         Console.WriteLine("S - Voltar");
 
@@ -50,6 +51,39 @@ public class TelaRevista
         repositorioRevista.Inserir(novaRevista);
 
         Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
+    }
+
+    public void VisualizarTodos(bool exibirTitulo)
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine("Visualizando Revistas...");
+        Console.WriteLine("--------------------------------------------");
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "{0, -6} | {1, -30} | {2, -15} | {3, -18} | {4, -10}",
+            "Id", "Título", "Num. da edição", "Data de publicação", "Caixa"
+        );
+
+        Revista[] revistasCadastradas = repositorioRevista.SelecionarTodos();
+
+        for (int i = 0; i < revistasCadastradas.Length; i++)
+        {
+            Revista r = revistasCadastradas[i];
+
+            if (r == null) continue;
+
+            Console.WriteLine(
+                "{0, -6} | {1, -30} | {2, -15} | {3, -18} | {4, -10}",
+                r.Id, r.Titulo, r.NumeroEdicao, r.DataPublicacao.ToShortDateString(), "Caixa 1"
+            );
+        }
+
+        Console.WriteLine();
+
+        Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
     }
 
     public Revista ObterDados()
