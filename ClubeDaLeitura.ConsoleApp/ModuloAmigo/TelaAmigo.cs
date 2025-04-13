@@ -123,7 +123,7 @@ public class TelaAmigo
         Console.WriteLine("Visualizando Amigos...");
         Console.WriteLine("----------------------------------------");
 
-        Console.WriteLine();
+        Console.WriteLine();    
 
         Console.WriteLine(
             "{0, -6} | {1, -20} | {2, -20} | {3, -15} | {4, -20}",
@@ -139,8 +139,8 @@ public class TelaAmigo
             if (a == null) continue;
 
             Console.WriteLine(
-            "{0, -6} | {1, -20} | {2, -20} | {3, -15} | {4, -20}",
-            a.Id, a.Nome, a.NomeResponsavel, a.Telefone, 0
+                "{0, -6} | {1, -20} | {2, -20} | {3, -15} | {4, -20}",
+                a.Id, a.Nome, a.NomeResponsavel, a.Telefone, 0
             );
         }
 

@@ -26,6 +26,7 @@ public class TelaCaixa
         Console.WriteLine();
 
         Console.WriteLine("1 - Cadastrar Caixa");
+        Console.WriteLine("4 - Visualizar Caixas");
 
         Console.WriteLine("S - Voltar");
 
@@ -53,6 +54,40 @@ public class TelaCaixa
         repositorioCaixa.Cadastrar(novaCaixa);
 
         Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
+    }
+
+    public void VisualizarTodos(bool exibirTitulo)
+    {
+        if (exibirTitulo) ExibirCabecalho();
+
+        Console.WriteLine("Visualizando Caixas...");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "{0, -6} | {1, -20} | {2, -10} | {3, -6}",
+            "Id", "Etiqueta", "Cor", "Dias de Empréstimo"
+        );
+
+        Caixa[] caixasCadastradas = repositorioCaixa.SelecionarTodos();
+
+        for (int i = 0; i < caixasCadastradas.Length; i++)
+        {
+            Caixa c = caixasCadastradas[i];
+
+            if (c == null) continue;
+
+            Console.WriteLine(
+                "{0, -6} | {1, -20} | {2, -10} | {3, -6}",
+                c.Id, c.Etiqueta, c.Cor, c.DiasEmprestimo
+            );
+        }
+
+        Console.WriteLine();
+
+        if (exibirTitulo)
+            Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
     }
 
     public Caixa ObterDados()

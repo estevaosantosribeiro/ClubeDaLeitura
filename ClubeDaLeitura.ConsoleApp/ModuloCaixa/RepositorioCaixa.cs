@@ -14,4 +14,9 @@ public class RepositorioCaixa
 
         caixas[contadorCaixas++] = novaCaixa;
     }
+
+    public Caixa[] SelecionarTodos()
+    {
+        return caixas;
+    }
 }
