@@ -1,5 +1,7 @@
 ﻿
 
+using ClubeDaLeitura.ConsoleApp.Compartilhado;
+
 namespace ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 
 public class TelaAmigo
@@ -55,7 +57,7 @@ public class TelaAmigo
 
         repositorioAmigo.Inserir(novoAmigo);
 
-        Console.WriteLine("O registro foi concluído com sucesso!");
+        Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
     }
 
     public void Editar()
@@ -80,12 +82,12 @@ public class TelaAmigo
 
         if (!conseguiuEditar)
         {
-            Console.WriteLine("Houve um erro durante a edição do registro...");
+            Notificador.ExibirMensagem("Houve um erro durante a edição do registro...", ConsoleColor.Red);
 
             return;
         }
 
-        Console.WriteLine("O registro foi editado com sucesso!");
+        Notificador.ExibirMensagem("O registro foi editado com sucesso!", ConsoleColor.Green);
     }
 
     public void Excluir()
@@ -108,12 +110,12 @@ public class TelaAmigo
 
         if (!conseguiuExcluir)
         {
-            Console.WriteLine("Houve um erro durante a exclusão do registro...");
+            Notificador.ExibirMensagem("Houve um erro durante a exclusão do registro...", ConsoleColor.Red);
 
             return;
         }
 
-        Console.WriteLine("O registro foi excluído com sucesso");
+        Notificador.ExibirMensagem("O registro foi excluído com sucesso", ConsoleColor.Green);
     }
 
     public void VisualizarTodos(bool exibirTitulo)
@@ -147,10 +149,7 @@ public class TelaAmigo
         Console.WriteLine();
 
         if (exibirTitulo)
-        {
-            Console.WriteLine("Pressione ENTER para continuar...");
-            Console.ReadLine();
-        }
+            Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
     }
 
     public Amigo ObterDados()
