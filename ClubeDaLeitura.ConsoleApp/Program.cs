@@ -27,6 +27,8 @@ class Program
 
                     case '2': telaAmigo.Editar(); break;
 
+                    case '3': telaAmigo.Excluir(); break;
+
                     case '4': telaAmigo.VisualizarTodos(true); break;
 
                     default: break;

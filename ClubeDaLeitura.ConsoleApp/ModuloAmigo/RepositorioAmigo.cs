@@ -33,6 +33,22 @@ public class RepositorioAmigo
         return false;
     }
 
+    public bool Excluir(int idAmigo)
+    {
+        for (int i = 0; i < amigos.Length; i++)
+        {
+            if (amigos[i] == null) continue;
+
+            if (amigos[i].Id == idAmigo)
+            {
+                amigos[i] = null!;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public Amigo[] SelecionarTodos()
     {
         return amigos;

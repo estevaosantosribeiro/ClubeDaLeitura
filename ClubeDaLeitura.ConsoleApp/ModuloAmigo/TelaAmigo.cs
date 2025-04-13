@@ -27,6 +27,7 @@ public class TelaAmigo
 
         Console.WriteLine("1 - Inserção de Amigo");
         Console.WriteLine("2 - Edição de Amigo");
+        Console.WriteLine("3 - Exclusão de Amigo");
         Console.WriteLine("4 - Visualizar Amigos");
 
         Console.WriteLine("S - Voltar");
@@ -85,6 +86,34 @@ public class TelaAmigo
         }
 
         Console.WriteLine("O registro foi editado com sucesso!");
+    }
+
+    public void Excluir()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine("Excluindo Amigo...");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        VisualizarTodos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idAmigo = Convert.ToInt32(Console.ReadLine()!);
+
+        Console.WriteLine();
+
+        bool conseguiuExcluir = repositorioAmigo.Excluir(idAmigo);
+
+        if (!conseguiuExcluir)
+        {
+            Console.WriteLine("Houve um erro durante a exclusão do registro...");
+
+            return;
+        }
+
+        Console.WriteLine("O registro foi excluído com sucesso");
     }
 
     public void VisualizarTodos(bool exibirTitulo)
