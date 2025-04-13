@@ -70,7 +70,7 @@ public class TelaAmigo
         VisualizarTodos(false);
 
         Console.Write("Digite o ID do registro que deseja selecionar: ");
-        int idAmigo = Convert.ToInt32(Console.ReadLine()!);
+        int idAmigo = Convert.ToInt32(Console.ReadLine());
 
         Console.WriteLine();
 

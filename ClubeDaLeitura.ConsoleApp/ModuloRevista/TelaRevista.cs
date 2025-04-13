@@ -27,9 +27,13 @@ public class TelaRevista
         Console.WriteLine();
 
         Console.WriteLine("1 - Inserir Revista");
+        Console.WriteLine("2 - Editar Revista");
+        Console.WriteLine("3 - Excluir Revista");
         Console.WriteLine("4 - Visualizar Revista");
 
         Console.WriteLine("S - Voltar");
+
+        Console.WriteLine();
 
         Console.Write("Digite uma opção válida: ");
         char opcaoEscolhida = Console.ReadLine()![0];
@@ -53,9 +57,65 @@ public class TelaRevista
         Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
     }
 
-    public void VisualizarTodos(bool exibirTitulo)
+    public void Editar()
     {
         ExibirCabecalho();
+
+        Console.WriteLine("Editando Revista...");
+        Console.WriteLine("--------------------------------------------");
+
+        Console.WriteLine();
+
+        VisualizarTodos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idRevista = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+
+        Revista revistaEditada = ObterDados();
+
+        bool conseguiuEditar = repositorioRevista.Editar(idRevista, revistaEditada);
+
+        if (!conseguiuEditar)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a edição do registro...", ConsoleColor.Red);
+
+            return;
+        }
+
+        Notificador.ExibirMensagem("O registro foi editado com sucesso!", ConsoleColor.Green);
+    }
+
+    public void Excluir()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine("Excluindo Revista...");
+        Console.WriteLine("--------------------------------------------");
+
+        Console.WriteLine();
+
+        VisualizarTodos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idRevista = Convert.ToInt32(Console.ReadLine());
+
+        bool conseguiuExcluir = repositorioRevista.Excluir(idRevista);
+
+        if (!conseguiuExcluir)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a exclusão do registro...", ConsoleColor.Red);
+
+            return;
+        }
+
+        Notificador.ExibirMensagem("O registro foi excluído com sucesso!", ConsoleColor.Green);
+    }
+
+    public void VisualizarTodos(bool exibirTitulo)
+    {
+        if (exibirTitulo) ExibirCabecalho();
 
         Console.WriteLine("Visualizando Revistas...");
         Console.WriteLine("--------------------------------------------");
@@ -83,7 +143,8 @@ public class TelaRevista
 
         Console.WriteLine();
 
-        Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
+        if (exibirTitulo)
+            Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
     }
 
     public Revista ObterDados()
