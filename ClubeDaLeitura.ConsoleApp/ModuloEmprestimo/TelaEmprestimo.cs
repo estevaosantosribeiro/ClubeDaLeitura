@@ -36,6 +36,8 @@ public class TelaEmprestimo
         Console.WriteLine();
 
         Console.WriteLine("1 - Cadastrar Empréstimo");
+        Console.WriteLine("2 - Editar Empréstimo");
+        Console.WriteLine("3 - Excluir Empréstimo");
         Console.WriteLine("4 - Visualizar Empréstimos");
 
         Console.WriteLine("S - Voltar");
@@ -64,6 +66,64 @@ public class TelaEmprestimo
         repositorioEmprestimo.Inserir(novoEmprestimo);
 
         Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
+    }
+
+    public void Editar()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine();
+
+        Console.WriteLine("Editando Empréstimo...");
+        Console.WriteLine("----------------------------------------");
+
+        VisualizarTodos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idEmprestimo = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+
+        Emprestimo emprestimoEditado = ObterDados();
+
+        bool conseguiuEditar = repositorioEmprestimo.Editar(idEmprestimo, emprestimoEditado);
+
+        if (!conseguiuEditar)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a edição do registro", ConsoleColor.Red);
+
+            return;
+        }
+
+        Notificador.ExibirMensagem("O registro foi editado com sucesso!", ConsoleColor.Green);
+    }
+
+    public void Excluir()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine();
+
+        Console.WriteLine("Editando Empréstimo...");
+        Console.WriteLine("----------------------------------------");
+
+        VisualizarTodos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idEmprestimo = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+
+        bool conseguiuExcluir = repositorioEmprestimo.Excluir(idEmprestimo);
+
+        if (!conseguiuExcluir)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a exclusão do registro...", ConsoleColor.Red);
+
+            return;
+        }
+
+        Notificador.ExibirMensagem("O registro foi excluído com sucesso!", ConsoleColor.Green);
     }
 
     public void VisualizarTodos(bool exibirTitulo)
