@@ -54,4 +54,19 @@ public class RepositorioAmigo
     {
         return amigos;
     }
+
+    public Amigo SelecionarPorId(int idAmigo)
+    {
+        for (int i = 0; i < amigos.Length; i++)
+        {
+            if (amigos[i] == null) continue;
+
+            if (amigos[i].Id == idAmigo)
+            {
+                return amigos[i];
+            }
+        }
+
+        return null!;
+    }
 }

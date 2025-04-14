@@ -54,4 +54,19 @@ public class RepositorioRevista
     {
         return revistas;
     }
+
+    public Revista SelecionarPorId(int idRevista)
+    {
+        for (int i = 0; i < revistas.Length; i++)
+        {
+            if (revistas[i] == null) continue;
+
+            if (revistas[i].Id == idRevista)
+            {
+                return revistas[i];
+            }
+        }
+
+        return null!;
+    }
 }
