@@ -10,10 +10,11 @@ public class Revista
     public DateTime DataPublicacao;
     public Caixa Caixa;
 
-    public Revista(string titulo, int numeroEdicao, DateTime dataPublicacao)
+    public Revista(string titulo, int numeroEdicao, DateTime dataPublicacao, Caixa caixa)
     {
         Titulo = titulo;
         NumeroEdicao = numeroEdicao;
         DataPublicacao = dataPublicacao;
+        Caixa = caixa;
     }
 }

@@ -53,14 +53,26 @@ public class TelaAmigo
 
         Amigo novoAmigo = ObterDados();
 
-        string erros = novoAmigo.Validar();
+        bool nomeEmUso = repositorioAmigo.NomeEmUso(novoAmigo.Nome);
+        bool telefoneEmUso = repositorioAmigo.TelefoneEmUso(novoAmigo.Telefone);
 
-        if (erros.Length > 0)
+        do
         {
-            Notificador.ExibirMensagem(erros, ConsoleColor.Red);
+            if (nomeEmUso && telefoneEmUso)
+            {
+                Notificador.ExibirMensagem("Este nome e telefone já estão cadastrados, por favor informe os dados novamente!", ConsoleColor.Red);
+                novoAmigo = ObterDados();
+            }
 
-            return;
-        }
+            string erros = novoAmigo.Validar();
+
+            if (erros.Length > 0)
+            {
+                Notificador.ExibirMensagem(erros, ConsoleColor.Red);
+
+                return;
+            }
+        } while (nomeEmUso && telefoneEmUso);
 
         repositorioAmigo.Inserir(novoAmigo);
 
@@ -182,5 +194,5 @@ public class TelaAmigo
         Amigo amigo = new Amigo(nome, nomeResponsavel, telefone);
 
         return amigo;
-    }
+    
 }

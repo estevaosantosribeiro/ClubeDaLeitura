@@ -6,10 +6,12 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista;
 public class TelaRevista
 {
     public RepositorioRevista repositorioRevista;
+    public RepositorioCaixa repositorioCaixa;
 
-    public TelaRevista(RepositorioRevista repositorioRevista)
+    public TelaRevista(RepositorioRevista repositorioRevista, RepositorioCaixa repositorioCaixa)
     {
         this.repositorioRevista = repositorioRevista;
+        this.repositorioCaixa = repositorioCaixa;
     }
 
     public void ExibirCabecalho()
@@ -113,6 +115,37 @@ public class TelaRevista
         Notificador.ExibirMensagem("O registro foi excluído com sucesso!", ConsoleColor.Green);
     }
 
+    public void VisualizarCaixas()
+    {
+        Console.WriteLine();
+
+        Console.WriteLine("Visualizando Caixas...");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "{0, -6} | {1, -20} | {2, -10} | {3, -6}",
+            "Id", "Etiqueta", "Cor", "Dias de Empréstimo"
+        );
+
+        Caixa[] caixasCadastradas = repositorioCaixa.SelecionarTodos();
+
+        for (int i = 0; i < caixasCadastradas.Length; i++)
+        {
+            Caixa c = caixasCadastradas[i];
+
+            if (c == null) continue;
+
+            Console.WriteLine(
+                "{0, -6} | {1, -20} | {2, -10} | {3, -6}",
+                c.Id, c.Etiqueta, c.Cor, c.DiasEmprestimo
+            );
+        }
+
+        Console.WriteLine();
+    }
+
     public void VisualizarTodos(bool exibirTitulo)
     {
         if (exibirTitulo) ExibirCabecalho();
@@ -158,7 +191,14 @@ public class TelaRevista
         Console.Write("Digite a data de publicação: ");
         DateTime dataPublicacao = Convert.ToDateTime(Console.ReadLine()!);
 
-        Revista novaRevista = new Revista(titulo, numeroEdicao, dataPublicacao);
+        VisualizarCaixas();
+
+        Console.Write("Digite o ID da caixa que deseja selecionar para a revista: ");
+        int idCaixa = Convert.ToInt32(Console.ReadLine());
+
+        Caixa caixaSelecionada = repositorioCaixa.SelecionarPorId(idCaixa);
+
+        Revista novaRevista = new Revista(titulo, numeroEdicao, dataPublicacao, caixaSelecionada);
 
         return novaRevista;
     }

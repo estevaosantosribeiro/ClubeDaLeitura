@@ -55,4 +55,19 @@ public class RepositorioCaixa
     {
         return caixas;
     }
+
+    public Caixa SelecionarPorId(int idCaixa)
+    {
+        for (int i = 0; i < caixas.Length; i++)
+        {
+            if (caixas[i] == null) continue;
+
+            if (caixas[i].Id == idCaixa)
+            {
+                return caixas[i];
+            }
+        }
+
+        return null!;
+    }
 }

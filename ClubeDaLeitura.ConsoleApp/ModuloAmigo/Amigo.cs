@@ -27,7 +27,9 @@ public class Amigo
         if (NomeResponsavel.Length < 3 || NomeResponsavel.Length > 100)
             erros += "O campo 'Nome do Reponsável' precisa conter entre 3 - 100 caracteres.\n";
         if (ValidarTelefone(Telefone))
-            erros += "O campo 'Telefone' deve seguir o formato: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX).\n"
+            erros += "O campo 'Telefone' deve seguir o formato: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX).\n";
+
+        return erros;
     }
 
     private bool ValidarTelefone(string telefone)
