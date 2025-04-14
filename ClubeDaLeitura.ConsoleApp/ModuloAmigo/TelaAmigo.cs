@@ -53,6 +53,15 @@ public class TelaAmigo
 
         Amigo novoAmigo = ObterDados();
 
+        string erros = novoAmigo.Validar();
+
+        if (erros.Length > 0)
+        {
+            Notificador.ExibirMensagem(erros, ConsoleColor.Red);
+
+            return;
+        }
+
         repositorioAmigo.Inserir(novoAmigo);
 
         Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
@@ -75,6 +84,15 @@ public class TelaAmigo
         Console.WriteLine();
 
         Amigo amigoEditado = ObterDados();
+
+        string erros = amigoEditado.Validar();
+
+        if (erros.Length > 0)
+        {
+            Notificador.ExibirMensagem(erros, ConsoleColor.Red);
+
+            return;
+        }
 
         bool conseguiuEditar = repositorioAmigo.Editar(idAmigo, amigoEditado);
 

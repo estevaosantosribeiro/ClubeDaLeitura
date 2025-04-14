@@ -69,4 +69,34 @@ public class RepositorioAmigo
 
         return null!;
     }
+
+    //public Amigo SelecionarPorNome(string nome)
+    //{
+    //    for (int i = 0; i < amigos.Length; i++)
+    //    {
+    //        if (amigos[i] == null) continue;
+
+    //        if (amigos[i].Nome == nome)
+    //        {
+    //            return amigos[i];
+    //        }
+    //    }
+
+    //    return null!;
+    //}
+
+    //public Amigo SelecionarPorTelefone(string telefone)
+    //{
+    //    for (int i = 0; i < amigos.Length; i++)
+    //    {
+    //        if (amigos[i] == null) continue;
+
+    //        if (amigos[i].Telefone == telefone)
+    //        {
+    //            return amigos[i];
+    //        }
+    //    }
+
+    //    return null!;
+    //}
 }
