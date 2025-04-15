@@ -69,4 +69,34 @@ public class RepositorioRevista
 
         return null!;
     }
+
+    public bool TituloEmUso(Revista novaRevista)
+    {
+        for (int i = 0; i < revistas.Length; i++)
+        {
+            if (revistas[i] == null) continue;
+
+            if (revistas[i].Titulo == novaRevista.Titulo)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool NumeroEdicaoEmUso(Revista novaRevista)
+    {
+        for (int i = 0; i < revistas.Length; i++)
+        {
+            if (revistas[i] == null) continue;
+
+            if (revistas[i].NumeroEdicao == novaRevista.NumeroEdicao)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

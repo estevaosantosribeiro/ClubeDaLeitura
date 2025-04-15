@@ -52,7 +52,32 @@ public class TelaRevista
 
         Console.WriteLine();
 
-        Revista novaRevista = ObterDados();
+        Revista novaRevista;
+
+        do
+        {
+            novaRevista = ObterDados();
+
+            bool TituloEmUso = repositorioRevista.TituloEmUso(novaRevista);
+            bool NumeroEdicaoEmUso = repositorioRevista.NumeroEdicaoEmUso(novaRevista);
+
+            if (TituloEmUso && NumeroEdicaoEmUso)
+            {
+                Notificador.ExibirMensagem("Este título e número de edição já estão em uso, por favor informe os dados novamente", ConsoleColor.Yellow);
+                continue;
+            }
+
+            string erros = novaRevista.Validar();
+
+            if (erros.Length > 0)
+            {
+                Notificador.ExibirMensagem(erros, ConsoleColor.Red);
+            }
+            else
+            {
+                break;
+            }
+        } while (true);
 
         repositorioRevista.Inserir(novaRevista);
 
@@ -75,7 +100,7 @@ public class TelaRevista
 
         Console.WriteLine();
 
-        Revista revistaEditada = ObterDados();
+        Revista revistaEditada = ObterDados(true);
 
         bool conseguiuEditar = repositorioRevista.Editar(idRevista, revistaEditada);
 
@@ -156,8 +181,8 @@ public class TelaRevista
         Console.WriteLine();
 
         Console.WriteLine(
-            "{0, -6} | {1, -30} | {2, -15} | {3, -18} | {4, -10}",
-            "Id", "Título", "Num. da edição", "Data de publicação", "Caixa"
+            "{0, -6} | {1, -30} | {2, -15} | {3, -18} | {4, -10} | {5, -10}",
+            "Id", "Título", "Num. da edição", "Data de publicação", "Status", "Caixa"
         );
 
         Revista[] revistasCadastradas = repositorioRevista.SelecionarTodos();
@@ -169,8 +194,8 @@ public class TelaRevista
             if (r == null) continue;
 
             Console.WriteLine(
-                "{0, -6} | {1, -30} | {2, -15} | {3, -18} | {4, -10}",
-                r.Id, r.Titulo, r.NumeroEdicao, r.DataPublicacao.ToShortDateString(), "Caixa 1"
+                "{0, -6} | {1, -30} | {2, -15} | {3, -18} | {4, -10} | {5, -10}",
+                r.Id, r.Titulo, r.NumeroEdicao, r.DataPublicacao.ToShortDateString(), r.Status, r.Caixa.Etiqueta
             );
         }
 
@@ -180,7 +205,7 @@ public class TelaRevista
             Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
     }
 
-    public Revista ObterDados()
+    public Revista ObterDados(bool editarStatus)
     {
         Console.Write("Digite o título da revista: ");
         string titulo = Console.ReadLine()!;
@@ -191,6 +216,13 @@ public class TelaRevista
         Console.Write("Digite a data de publicação: ");
         DateTime dataPublicacao = Convert.ToDateTime(Console.ReadLine()!);
 
+        string status = "Disponível";
+
+        if (editarStatus)
+        {
+            status = SelecionarStatus();
+        }
+
         VisualizarCaixas();
 
         Console.Write("Digite o ID da caixa que deseja selecionar para a revista: ");
@@ -198,8 +230,37 @@ public class TelaRevista
 
         Caixa caixaSelecionada = repositorioCaixa.SelecionarPorId(idCaixa);
 
-        Revista novaRevista = new Revista(titulo, numeroEdicao, dataPublicacao, caixaSelecionada);
+        Revista novaRevista = new Revista(titulo, numeroEdicao, dataPublicacao, status, caixaSelecionada);
 
         return novaRevista;
+    }
+
+    public string SelecionarStatus()
+    {
+        Console.WriteLine();
+
+        Console.WriteLine("----------------------------------------");
+        Console.WriteLine("1 - Disponível");
+        Console.WriteLine("2 - Emprestada");
+        Console.WriteLine("3 - Reservada");
+        Console.WriteLine("----------------------------------------");
+
+        Console.Write("Selecione o status da revista: ");
+        char opcaoStatus = Console.ReadLine()![0];
+
+        string status = "";
+
+        switch (opcaoStatus)
+        {
+            case '1': status = "Disponível"; break;
+
+            case '2': status = "Emprestada"; break;
+
+            case '3': status = "Reservada"; break;
+
+            default: status = "Disponível"; break;
+        }
+
+        return status;
     }
 }
