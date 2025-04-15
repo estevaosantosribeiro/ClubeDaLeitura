@@ -26,4 +26,14 @@ public class Emprestimo
         DataDevolucao = dataDevolucao;
         Situacao = situacao;
     }
+
+    public DateTime ObterDataDevolucao()
+    {
+        return DataDevolucao;
+    }
+
+    public void RegistrarDevolucao()
+    {
+        Situacao = "Concluído";
+    }
 }

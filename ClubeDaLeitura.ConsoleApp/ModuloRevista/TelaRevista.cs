@@ -56,7 +56,7 @@ public class TelaRevista
 
         do
         {
-            novaRevista = ObterDados();
+            novaRevista = ObterDados(false);
 
             bool TituloEmUso = repositorioRevista.TituloEmUso(novaRevista);
             bool NumeroEdicaoEmUso = repositorioRevista.NumeroEdicaoEmUso(novaRevista);

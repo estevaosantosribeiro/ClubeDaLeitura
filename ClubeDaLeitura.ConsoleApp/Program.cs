@@ -17,7 +17,7 @@ class Program
 
         TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo);
         TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa);
-        TelaRevista telaRevista = new TelaRevista(repositorioRevista);
+        TelaRevista telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa);
         TelaEmprestimo telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo, repositorioAmigo, repositorioRevista);
 
         TelaPrincipal telaPrincipal = new TelaPrincipal();
@@ -90,6 +90,8 @@ class Program
                     case '3': telaEmprestimo.Excluir(); break;
 
                     case '4': telaEmprestimo.VisualizarTodos(true); break;
+
+                    case '5': telaEmprestimo.RegistrarDevolucao(); break;
 
                     default: break;
                 }
