@@ -70,4 +70,19 @@ public class RepositorioCaixa
 
         return null!;
     }
+
+    public bool EtiquetaEmUso(Caixa novaCaixa)
+    {
+        for (int i = 0; i < caixas.Length; i++)
+        {
+            if (caixas[i] == null) continue;
+
+            if (caixas[i].Etiqueta == novaCaixa.Etiqueta)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

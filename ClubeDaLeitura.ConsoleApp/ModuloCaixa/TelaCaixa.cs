@@ -1,4 +1,5 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 
@@ -51,7 +52,31 @@ public class TelaCaixa
 
         Console.WriteLine();
 
-        Caixa novaCaixa = ObterDados();
+        Caixa novaCaixa;
+
+        do
+        {
+            novaCaixa = ObterDados();
+
+            bool etiquetaEmUso = repositorioCaixa.EtiquetaEmUso(novaCaixa);
+
+            if (etiquetaEmUso)
+            {
+                Notificador.ExibirMensagem("Etiqueta já está em uso, por favor informe os dados novamente", ConsoleColor.Yellow);
+                continue;
+            }
+
+            string erros = novaCaixa.Validar();
+
+            if (erros.Length > 0)
+            {
+                Notificador.ExibirMensagem(erros, ConsoleColor.Red);
+            }
+            else
+            {
+                break;
+            }
+        } while (true);
 
         repositorioCaixa.Cadastrar(novaCaixa);
 
@@ -104,6 +129,15 @@ public class TelaCaixa
 
         Console.WriteLine();
 
+        int quantidadeRevistas = repositorioCaixa.SelecionarPorId(idCaixa).ObterQuantidadeRevistas();
+
+        if (quantidadeRevistas > 0)
+        {
+            Notificador.ExibirMensagem("Não é possível excluir a caixa pois ela ainda possui revistas...", ConsoleColor.Red);
+
+            return;
+        }
+
         bool conseguiuExcluir = repositorioCaixa.Excluir(idCaixa);
 
         if (!conseguiuExcluir)
@@ -155,8 +189,7 @@ public class TelaCaixa
         Console.Write("Digite a etiqueta da caixa: ");
         string etiqueta = Console.ReadLine()!;
 
-        Console.Write("Digite a cor da caixa: ");
-        string cor = Console.ReadLine()!;
+        string cor = SelecionarCor();
 
         Console.Write("Digite a quantidade de dias de empréstimo: ");
         int diasEmprestimo = Convert.ToInt32(Console.ReadLine()!);
@@ -164,5 +197,55 @@ public class TelaCaixa
         Caixa novaCaixa = new Caixa(etiqueta, cor, diasEmprestimo);
 
         return novaCaixa;
+    }
+
+    public string SelecionarCor()
+    {
+        Console.WriteLine("Cores disponíveis");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine("1 - Verde (#00ff00)");
+        Console.WriteLine("2 - Amarelo (#ffff00)");
+        Console.WriteLine("3 - Azul (#0000ff)");
+        Console.WriteLine("5 - Vermelho (#ff0000)");
+        Console.WriteLine("6 - Laranja (#ffa500)");
+        Console.WriteLine("7 - Roxo (#800080)");
+        Console.WriteLine("8 - Preto (#000000)");
+
+        Console.WriteLine();
+
+        Console.Write("Selecione a cor que deseja: ");
+        char opcaoEscolhida = Console.ReadLine()![0];
+
+        string cor = "#ffffff";
+
+        switch (opcaoEscolhida)
+        {
+            case '1':
+                cor = "#00ff00";
+                break;
+            case '2':
+                cor = "#ffff00";
+                break;
+            case '3':
+                cor = "#0000ff";
+                break;
+            case '5':
+                cor = "#ff0000";
+                break;
+            case '6':
+                cor = "#ffa500";
+                break;
+            case '7':
+                cor = "#800080";
+                break;
+            case '8':
+                cor = "#000000";
+                break;
+            default:
+                break;
+        }
+
+        return cor;
     }
 }

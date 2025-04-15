@@ -1,4 +1,5 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 
@@ -53,6 +54,21 @@ public class RepositorioAmigo
     public Amigo[] SelecionarTodos()
     {
         return amigos;
+    }
+
+    public Emprestimo[] SelecionarEmprestimos(int idAmigo)
+    {
+        for (int i = 0; i < amigos.Length; i++)
+        {
+            if (amigos[i] == null) continue;
+
+            if (amigos[i].Id == idAmigo)
+            {
+                return amigos[i].Emprestimos;
+            }
+        }
+
+        return null!;
     }
 
     public Amigo SelecionarPorId(int idAmigo)

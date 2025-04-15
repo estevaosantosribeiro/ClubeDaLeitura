@@ -1,4 +1,5 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 
@@ -51,17 +52,19 @@ public class TelaAmigo
 
         Console.WriteLine();
 
-        Amigo novoAmigo = ObterDados();
-
-        bool nomeEmUso = repositorioAmigo.NomeEmUso(novoAmigo.Nome);
-        bool telefoneEmUso = repositorioAmigo.TelefoneEmUso(novoAmigo.Telefone);
+        Amigo novoAmigo;
 
         do
         {
+            novoAmigo = ObterDados();
+
+            bool nomeEmUso = repositorioAmigo.NomeEmUso(novoAmigo.Nome);
+            bool telefoneEmUso = repositorioAmigo.TelefoneEmUso(novoAmigo.Telefone);
+
             if (nomeEmUso && telefoneEmUso)
             {
-                Notificador.ExibirMensagem("Este nome e telefone já estão cadastrados, por favor informe os dados novamente!", ConsoleColor.Red);
-                novoAmigo = ObterDados();
+                Notificador.ExibirMensagem("Este nome e telefone já estão cadastrados, por favor informe os dados novamente", ConsoleColor.Yellow);
+                continue;
             }
 
             string erros = novoAmigo.Validar();
@@ -69,10 +72,13 @@ public class TelaAmigo
             if (erros.Length > 0)
             {
                 Notificador.ExibirMensagem(erros, ConsoleColor.Red);
-
-                return;
             }
-        } while (nomeEmUso && telefoneEmUso);
+            else
+            {
+                break;
+            }
+
+        } while (true);
 
         repositorioAmigo.Inserir(novoAmigo);
 
@@ -134,6 +140,15 @@ public class TelaAmigo
 
         Console.WriteLine();
 
+        int quantidadeEmprestimos = repositorioAmigo.SelecionarPorId(idAmigo).ObterQuantidadeEmprestimos();
+
+        if (quantidadeEmprestimos > 0)
+        {
+            Notificador.ExibirMensagem("Não é possível excluir o amigo pois ele ainda possui empréstimos ativos...", ConsoleColor.Red);
+
+            return;
+        }
+
         bool conseguiuExcluir = repositorioAmigo.Excluir(idAmigo);
 
         if (!conseguiuExcluir)
@@ -153,7 +168,7 @@ public class TelaAmigo
         Console.WriteLine("Visualizando Amigos...");
         Console.WriteLine("----------------------------------------");
 
-        Console.WriteLine();    
+        Console.WriteLine();
 
         Console.WriteLine(
             "{0, -6} | {1, -20} | {2, -20} | {3, -15} | {4, -20}",
@@ -170,7 +185,7 @@ public class TelaAmigo
 
             Console.WriteLine(
                 "{0, -6} | {1, -20} | {2, -20} | {3, -15} | {4, -20}",
-                a.Id, a.Nome, a.NomeResponsavel, a.Telefone, 0
+                a.Id, a.Nome, a.NomeResponsavel, a.Telefone, a.ObterQuantidadeEmprestimos()
             );
         }
 
@@ -178,6 +193,49 @@ public class TelaAmigo
 
         if (exibirTitulo)
             Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
+    }
+
+    public void VisualizarEmprestimos()
+    {
+        VisualizarTodos(true);
+
+        Console.Write("Digite o ID do amigo que deseja ver os empréstimos: ");
+        int idAmigo = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+
+        Console.WriteLine("Visualizando Empréstimos...");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "{0, -6} | {1, -20} | {2, -20} | {3, -18} | {4, -18} | {5, -10}",
+            "Id", "Revista", "Data de Empréstimo", "Data de Devolução", "Situação"
+        );
+
+        Emprestimo[] emprestimos = repositorioAmigo.SelecionarEmprestimos(idAmigo);
+
+        for (int i = 0; i < emprestimos.Length; i++)
+        {
+            Emprestimo e = emprestimos[i];
+
+            if (e == null) continue;
+
+            Console.WriteLine(
+                "{0, -6} | {1, -20} | {2, -20} | {3, -18} | {4, -18} | {5, -10}",
+                e.Id,
+                e.Amigo.Nome,
+                e.Revista.Titulo,
+                e.DataEmprestimo.ToShortDateString(),
+                e.DataDevolucao.ToShortDateString(),
+                e.Situacao
+            );
+        }
+
+        Console.WriteLine();
+
+        Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
     }
 
     public Amigo ObterDados()
@@ -194,5 +252,5 @@ public class TelaAmigo
         Amigo amigo = new Amigo(nome, nomeResponsavel, telefone);
 
         return amigo;
-    
-}
+
+    }
