@@ -52,8 +52,23 @@ public class RepositorioEmprestimo
         return false;
     }
 
-    internal Emprestimo[] SelecionarTodos()
+    public Emprestimo[] SelecionarTodos()
     {
         return emprestimos;
+    }
+
+    public Emprestimo selecionarEmprestimoPorIdAmigo(int idAmigo)
+    {
+        for (int i = 0; i < emprestimos.Length; i++)
+        {
+            if (emprestimos[i] == null) continue;
+
+            if (emprestimos[i].Amigo.Id == idAmigo)
+            {
+                return emprestimos[i];
+            }
+        }
+
+        return null!;
     }
 }

@@ -140,9 +140,9 @@ public class TelaAmigo
 
         Console.WriteLine();
 
-        int quantidadeEmprestimos = repositorioAmigo.SelecionarPorId(idAmigo).ObterQuantidadeEmprestimos();
+        bool temEmprestimos = repositorioAmigo.SelecionarPorId(idAmigo).temEmprestimo;
 
-        if (quantidadeEmprestimos > 0)
+        if (temEmprestimos)
         {
             Notificador.ExibirMensagem("Não é possível excluir o amigo pois ele ainda possui empréstimos ativos...", ConsoleColor.Red);
 
@@ -172,7 +172,7 @@ public class TelaAmigo
 
         Console.WriteLine(
             "{0, -6} | {1, -20} | {2, -20} | {3, -15} | {4, -20}",
-            "Id", "Nome", "Responsável", "Telefone", "Empréstimos"
+            "Id", "Nome", "Responsável", "Telefone", "Empréstimo ativo"
         );
 
         Amigo[] amigosCadastrados = repositorioAmigo.SelecionarTodos();
@@ -185,7 +185,7 @@ public class TelaAmigo
 
             Console.WriteLine(
                 "{0, -6} | {1, -20} | {2, -20} | {3, -15} | {4, -20}",
-                a.Id, a.Nome, a.NomeResponsavel, a.Telefone, a.ObterQuantidadeEmprestimos()
+                a.Id, a.Nome, a.NomeResponsavel, a.Telefone, a.temEmprestimo ? "Sim" : "Não"
             );
         }
 
@@ -193,49 +193,6 @@ public class TelaAmigo
 
         if (exibirTitulo)
             Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
-    }
-
-    public void VisualizarEmprestimos()
-    {
-        VisualizarTodos(true);
-
-        Console.Write("Digite o ID do amigo que deseja ver os empréstimos: ");
-        int idAmigo = Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine();
-
-        Console.WriteLine("Visualizando Empréstimos...");
-        Console.WriteLine("----------------------------------------");
-
-        Console.WriteLine();
-
-        Console.WriteLine(
-            "{0, -6} | {1, -20} | {2, -20} | {3, -18} | {4, -18} | {5, -10}",
-            "Id", "Revista", "Data de Empréstimo", "Data de Devolução", "Situação"
-        );
-
-        Emprestimo[] emprestimos = repositorioAmigo.SelecionarEmprestimos(idAmigo);
-
-        for (int i = 0; i < emprestimos.Length; i++)
-        {
-            Emprestimo e = emprestimos[i];
-
-            if (e == null) continue;
-
-            Console.WriteLine(
-                "{0, -6} | {1, -20} | {2, -20} | {3, -18} | {4, -18} | {5, -10}",
-                e.Id,
-                e.Amigo.Nome,
-                e.Revista.Titulo,
-                e.DataEmprestimo.ToShortDateString(),
-                e.DataDevolucao.ToShortDateString(),
-                e.Situacao
-            );
-        }
-
-        Console.WriteLine();
-
-        Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.Yellow);
     }
 
     public Amigo ObterDados()

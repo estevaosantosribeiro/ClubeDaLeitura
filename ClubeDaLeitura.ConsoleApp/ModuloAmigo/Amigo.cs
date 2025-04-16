@@ -10,7 +10,7 @@ public class Amigo
     public string Nome;
     public string NomeResponsavel;
     public string Telefone;
-    public Emprestimo[] Emprestimos;
+    public bool temEmprestimo;
 
     public Amigo(string nome,
                  string nomeResponsavel,
@@ -19,7 +19,6 @@ public class Amigo
         Nome = nome;
         NomeResponsavel = nomeResponsavel;
         Telefone = telefone;
-        Emprestimos = new Emprestimo[100];
     }
 
     public string Validar()
@@ -56,45 +55,13 @@ public class Amigo
         }
     }
 
-    public void AdicionarEmprestimo(Emprestimo emprestimo)
+    public void AdicionarEmprestimo()
     {
-        for (int i = 0; i < Emprestimos.Length; i++)
-        {
-            if (Emprestimos[i] == null)
-            {
-                Emprestimos[i] = emprestimo;
-                return;
-            }
-        }
+        temEmprestimo = true;
     }
 
-    public void RemoverEmprestimo(Emprestimo emprestimo)
+    public void RemoverEmprestimo()
     {
-        for (int i = 0; i < Emprestimos.Length; i++)
-        {
-            if (Emprestimos[i] == null) continue;
-
-            else if (Emprestimos[i] == emprestimo)
-            {
-                Emprestimos[i] = null!;
-
-                return;
-            }
-        }
-    }
-
-    public int ObterQuantidadeEmprestimos()
-    {
-        int contador = 0;
-
-        for (int i = 0; i < Emprestimos.Length; i++)
-        {
-            if (Emprestimos[i] != null)
-            {
-                contador++;
-            }
-        }
-
-        return contador;
+        temEmprestimo = false;
     }
 }

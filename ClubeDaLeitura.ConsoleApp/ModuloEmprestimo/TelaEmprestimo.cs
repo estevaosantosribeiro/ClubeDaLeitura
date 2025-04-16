@@ -36,10 +36,8 @@ public class TelaEmprestimo
         Console.WriteLine();
 
         Console.WriteLine("1 - Cadastrar Empréstimo");
-        Console.WriteLine("2 - Editar Empréstimo");
-        Console.WriteLine("3 - Excluir Empréstimo");
-        Console.WriteLine("4 - Visualizar Empréstimos");
-        Console.WriteLine("5 - Registrar Devolução");
+        Console.WriteLine("2 - Visualizar Empréstimos");
+        Console.WriteLine("3 - Registrar Devolução");
 
         Console.WriteLine("S - Voltar");
 
@@ -69,11 +67,20 @@ public class TelaEmprestimo
 
         Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
-        Emprestimo novoEmprestimo = ObterDados(amigoSelecionado);
+        VisualizarRevistas();
+
+        Console.Write("Digite o ID da revista que deseja selecionar: ");
+        int idRevista = Convert.ToInt32(Console.ReadLine());
+
+        Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
+
+        Emprestimo novoEmprestimo = SalvarDados(amigoSelecionado, revistaSelecionada);
 
         repositorioEmprestimo.Inserir(novoEmprestimo);
 
-        amigoSelecionado.AdicionarEmprestimo(novoEmprestimo);
+        amigoSelecionado.AdicionarEmprestimo();
+
+        revistaSelecionada.Emprestar();
 
         Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
     }
@@ -101,7 +108,14 @@ public class TelaEmprestimo
 
         Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
-        Emprestimo emprestimoEditado = ObterDados(amigoSelecionado);
+        VisualizarRevistas();
+
+        Console.Write("Digite o ID da revista que deseja selecionar: ");
+        int idRevista = Convert.ToInt32(Console.ReadLine());
+
+        Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
+
+        Emprestimo emprestimoEditado = SalvarDados(amigoSelecionado, revistaSelecionada);
 
         bool conseguiuEditar = repositorioEmprestimo.Editar(idEmprestimo, emprestimoEditado);
 
@@ -245,15 +259,8 @@ public class TelaEmprestimo
         Console.WriteLine();
     }
 
-    public Emprestimo ObterDados(Amigo amigoSelecionado)
+    public Emprestimo SalvarDados(Amigo amigoSelecionado, Revista revistaSelecionada)
     {
-        VisualizarRevistas();
-
-        Console.Write("Digite o ID da revista que deseja selecionar: ");
-        int idRevista = Convert.ToInt32(Console.ReadLine());
-
-        Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
-
         DateTime dataEmprestimo = DateTime.Now;
 
         DateTime dataDevolucao = dataEmprestimo.AddDays(revistaSelecionada.Caixa.DiasEmprestimo);
@@ -278,8 +285,9 @@ public class TelaEmprestimo
         Console.Write("Digite o ID do amigo que deseja selecionar");
         char idAmigo = Console.ReadLine()![0];
 
-        Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
+        Emprestimo emprestimo = repositorioEmprestimo.selecionarEmprestimoPorIdAmigo(idAmigo);
 
-        amigoSelecionado.RemoverEmprestimo(amigoSelecionado.Emprestimos[0]);
+        emprestimo.Amigo.RemoverEmprestimo();
+        emprestimo.Revista.Devolver();
     }
 }
